@@ -10,7 +10,7 @@ How to use assembly-metrics.py:
 - Make sure the python file and the sequence file are in the same directory
 
  
-
+C. remanei analysis:
 - https://ftp.ebi.ac.uk/pub/databases/wormbase/parasite/releases/WBPS19/species/caenorhabditis_remanei/PRJNA248909/caenorhabditis_remanei.PRJNA248909.WBPS19.genomic.fa.gz
     - This file is 115Mb.
     - Number of contigs: 1591 , Total length: 118549266 , Average length: 74512.42363293526
