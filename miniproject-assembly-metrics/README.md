@@ -2,6 +2,14 @@
 
 Calculating assembly metrics of C. remanei
 
+How to use assembly-metrics.py:
+- Pull file to terminal
+- Make the file executable using chmod +x assembly-metrics.py
+- Run the file by doing ./assembly-metrics.py and give it a .fasta file as an argument
+    - ./assembly-metrics.py sequence.fa
+- Make sure the python file and the sequence file are in the same directory
+
+ 
 
 - https://ftp.ebi.ac.uk/pub/databases/wormbase/parasite/releases/WBPS19/species/caenorhabditis_remanei/PRJNA248909/caenorhabditis_remanei.PRJNA248909.WBPS19.genomic.fa.gz
     - This file is 115Mb.
