@@ -86,13 +86,13 @@ Genes encoded by the mitochondrial genome have the gene symbol prefix `MT-`. The
 Use `str_starts()` to identify which genes are mitochondrially encoded and store this information in a new Boolean column named `is_mitochondrial`. Next, compute the mean and median expression of mitochondrial genes in the liver, as well as the mean and median expression of nuclear-encoded genes in the liver and compare them. Do mitochondrial genes exhibit higher or lower mean and median expression than nuclear genes? What does the difference between the mean and median tell you about the distribution of gene expression.
 
 ```{r}
-liver_new <- liver %>% mutate(is_mitochondrial = str_starts(Description, 'MT-'))
+liver_new <- dt %>% mutate(is_mitochondrial = str_starts(Description, 'MT-'))
 #Made a new tibble from the original tibble that has a new column called is
 #_mitochondrial where the value is the boolean returned if the description starts with MT-.
 
 liver_new %>% group_by(is_mitochondrial) %>% summarize(mean_expression = mean(Liver), median_expression = median(Liver))
 
-#Mitochondrial genes are expressed much higher in the liver than nuclear genes, the median is very high as well. The mitochondrial genes have a normal distribution centered at ~18700 since its mean and median are very similar with high expression. The nuclear genes has a right-skewed distribution, since its median is much lower than its mean, meaning that there are many more lowly expressed genes, with some higher expressions. Generally, there are some nuclear genes with high expression, but most low, and almost all mitochondrial genes are highly expressed.
+#Mitochondrial genes are expressed much higher in the liver than nuclear genes, but the median is very low. This suggests that most of the mitochondrial genes are expressed at lower levels, but there are some genes with expression levels so high that they are skewing the mean. The average expression of the nuclear genes are very low, with a median expression level of zero. This means most nuclear genes are not being expressed at all in the liver, but there are some being expressed since the mean is above 0. 
 
 ```
 
