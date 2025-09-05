@@ -1,0 +1,157 @@
+In this exercise, you will practice basic plotting with **`ggplot2`** on a dataset of median gene expression levels across samples from various human tissues from the GTEx Project. The dataset (`dt`) has one row per gene, with columns:
+
+-   `Name`: the Ensembl gene ID
+-   `Description`: the gene symbol
+-   One column per tissue containing the median expression levels (in TPM units)
+
+Insert your code into the empty code blocks. Insert answers any comprehension questions as comments within the code blocks. You do not need to submit the figures themselves, only the code used to produce them. Remember to label your axes!
+
+------------------------------------------------------------------------
+
+### Load data
+
+Start by loading the data into R, as before.
+
+```{r load-data}
+library(tidyverse)
+
+dt <- read_delim(
+  "GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_median_tpm.gct.gz",
+  skip = 2, col_names = TRUE, delim = "\t"
+)
+```
+
+------------------------------------------------------------------------
+
+### Q1. Histogram
+
+Make a histogram of gene expression in the liver. Use the argument `breaks = seq(0, 100, 2)` to bin in units of 2 TPM, ranging from 0 to 100. Note that this cuts off the data at 100, which might be misleading depending on what we are trying to depict!
+
+What do you notice about the shape of the distribution? What does it tell you about the relative expression of genes in the liver transcriptome? Do you think this is specific to the liver? Check another tissue, as well.
+
+```{r q1}
+library(ggplot2)
+
+ggplot(data = dt, aes(x = Liver)) + geom_histogram( fill = "yellow", breaks = seq(0,100,2)) + labs(title = "Liver Transcriptome", x = "Expression Level", y = "Frequency")
+
+# This shows a histogram that is skewed to the right. The median value is 0 or close to zero. There are thousands of genes skewed to the right, with the frequency of genes being expressed decreases with increasing expression.
+
+
+ggplot(data = dt, aes(x = `Heart - Left Ventricle`)) + geom_histogram(fill = "red", breaks = seq(0,100,2)) + labs(title = "Left Ventricle Transcriptome", x = "Expression Level", y = "Frequency")
+
+#The heart transcriptome is the same. If we filter by expressed genes with a TPM>1 we will see a better representation.
+
+```
+
+------------------------------------------------------------------------
+
+### Q2. Density plot
+
+Going back to the liver, now represent the same data with a density plot rather than a histogram. Do not restrict the X axis. Within the same code block, create a second plot where you scale the X axis to a log10 scale. Add a pseudo-count of 1 to the expression values, as the log of 0 is negative infinity.
+
+```{r q2}
+ggplot(data = dt, aes(x = Liver)) + geom_density(fill = "orange") + labs(title = "Liver Transcriptome", x = "Expression Level", y = "Frequency")
+
+expression_values <- (dt$Liver +1)
+ggplot(data = dt, aes(x = expression_values)) + geom_density(fill = "purple") + labs(title = "Liver Transcriptome", x = "Expression Level", y = "Frequency") + scale_x_log10()
+# answer here
+```
+
+------------------------------------------------------------------------
+
+### Q3. Scatter plot
+
+Make a scatter plot comparing the expression genes in the `Liver` to the same genes in the `Heart - Left Ventricle`. Add a pseudocount to each and log10 scale both the X and Y axes. Adjust the point size to 1 and the alpha (opacity) to 0.2. Add a dashed red line along the diagonal (y = x).
+
+```{r q3}
+expression_values <- (dt$Liver +1)
+expression_values2 <- (dt$`Heart - Left Ventricle`+1)
+
+ggplot(data = dt, aes(x = expression_values, y = expression_values2)) + geom_point(size=1, alpha = 0.2, color = "navy") + labs(title = "Liver vs Heart Left Ventricle (LV) Transcriptome", x = "Liver Expression", y = "Heart LV Expression") + scale_x_log10()+ scale_y_log10() + geom_abline(slope = 1, color = "red", lty = 2) + theme_minimal()
+# answer here
+```
+
+------------------------------------------------------------------------
+
+### Q4. Colored points on scatter plot
+
+Color the previous scatter plot points based on whether the genes are mitochondrial vs nuclear encoded. Note that the tidyverse function `str_starts()` can test whether a string starts with a specific pattern.
+
+```{r q4}
+dt_scatter <- dt %>% mutate(is_mitochondrial = str_starts(Description, 'MT-'))
+
+ggplot(data = dt_scatter, aes(x = expression_values, y = expression_values2, color = is_mitochondrial)) +
+  geom_point(size=1, alpha = 0.2) + 
+  labs(title = "Liver vs Heart Left Ventricle (LV) Transcriptome", x = "Liver Expression", y = "Heart LV Expression") + 
+  scale_x_log10()+ 
+  scale_y_log10() + 
+  geom_abline(slope = 1, color = "red", lty = 2) +
+  theme_minimal()+
+  scale_color_brewer(palette = "Pastel1", name = "Is it Mitochondrial?")
+# answer here
+```
+
+------------------------------------------------------------------------
+
+### Q5. Facets
+
+Repeat question 1 (histogram), but faceting such that you create separate panels (arranged horizontally) for several tissues of interest:
+
+```{r}
+focal_tissues <- c("Liver", "Testis", "Whole Blood", "Heart - Left Ventricle", "Brain - Cortex")
+
+dt_long <- dt_scatter %>%
+  select("Description", "is_mitochondrial", all_of(focal_tissues)) %>%
+  pivot_longer(cols = focal_tissues, names_to = "Tissue", values_to = "TPM")
+
+ggplot(data = dt_long, aes(x = TPM, fill = Tissue)) +
+  geom_histogram(breaks = seq(0,100,2)) +
+  labs(title = "Transcriptome", x = "Expression Level", y = "Tissue")+
+  facet_grid(.~Tissue)
+
+```
+
+This requires first converting the data into "long" format with `pivot_longer()`:
+
+```{r}
+dt_long <- dt %>%
+  select("Description", "is_mitochondrial", all_of(focal_tissues)) %>%
+  pivot_longer(cols = focal_tissues, names_to = "Tissue", values_to = "TPM")
+```
+
+After creating 5-panel plot, also split into two rows that separate genes that are versus are not encoded by the mitochondrial genome (10 panels). Use the argument `scales = "free_y"` to deal with the fact that there are far fewer mitochondrial-encoded than nuclear-encoded genes.
+
+```{r q5}
+
+# your code for 5-panel plot
+focal_tissues <- c("Liver", "Testis", "Whole Blood", "Heart - Left Ventricle", "Brain - Cortex")
+
+dt_long <- dt_scatter %>%
+  select("Description", "is_mitochondrial", all_of(focal_tissues)) %>%
+  pivot_longer(cols = focal_tissues, names_to = "Tissue", values_to = "TPM")
+
+ggplot(data = dt_long, aes(x = TPM, fill = Tissue)) +
+  geom_histogram(breaks = seq(0,100,2)) +
+  labs(title = "Transcriptome", x = "Expression Level", y = "Tissue")+
+  facet_grid(.~Tissue)
+
+# your code for 10-panel plot
+dt_long <- dt_scatter %>%
+  select("Description", "is_mitochondrial", all_of(focal_tissues)) %>%
+  pivot_longer(cols = focal_tissues, names_to = "Tissue", values_to = "TPM")
+
+ggplot(data = dt_long, aes(x = TPM, fill = Tissue)) +
+  geom_histogram(breaks = seq(0,100,2)) +
+  labs(title = "Transcriptome", x = "Expression Level", y = "Tissue")+
+  facet_grid(is_mitochondrial~Tissue, scales = "free_y")
+
+```
+
+------------------------------------------------------------------------
+
+Optional: Have fun and explore these data! Create your own plots and interpret them.
+
+```{r q5}
+
+# answer here
+```
