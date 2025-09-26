@@ -21,4 +21,5 @@ minimap2 -a -d -map-ont /Users/cmdb/qb25-answers/week2/genomes/saCCer3.fa /Users
 
 #Week 2 Exercise 5
 hisat2 -x /Users/cmdb/qb25-answers/week2/genomes/sacCer3 -U /Users/cmdb/qb25-answers/week2/rawdata/SRR10143769.fastq -S question_5.sam 
+#Most of the reads align to the 3' end of the gene
 
