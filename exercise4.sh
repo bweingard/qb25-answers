@@ -1,15 +1,15 @@
 #!/bin/bash
 
-bedtools intersect -c -a snps-chr1.bed -b hg19-kc.bed | sort -k 7 -r | head -n 1
-#chr1	145209190	145209191	rs782620697	0	+ 6
+bedtools intersect -c -a hg19-kc.bed -b snps-chr1.bed | sort -k5,5nr | head -n 1
+#chr1	245912648	246670581	ENST00000490107.6_7	5445
 
-#Systematic name: ENSG00000286219.2_10
-#Human readable name:  notch 2 N-terminal like C, transcript variant 1 (NOTCH2NLC)
-#position: hg19 chr1:145,209,155-145,282,798 (transcript)
-#size: 73,644 (transcript)
-#exon count: 7 (transcript)
+#Systematic name: ENST00000490107.6_7
+#Human readable name:  SMYD3_HUMAN
+#position: hg19 chr1:245,912,649-246,670,581 (transcript)
+#size: 757,933 (transcript)
+#exon count: 12 (transcript)
 
-## Notch is an essential protein involved in the Notch signalling pathway. It’s a really large gene so I think that’s why it could have the most snps, as well as multiple exons.
+## SMYD3 encodes a histone methyltransferase that is a member of an RNA polymerase complex. It’s a really large gene so I think that’s why it could have the most snps and variation, as well as multiple exons.
 
 bedtools sample -n 20 -seed 42 -i snps-chr1.bed > snps-subset.bed
 
