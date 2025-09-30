@@ -46,3 +46,23 @@ for line in open('biallelic.vcf'):
                     continue
                 print()
 a.close()
+
+sample_index = sample_ids.index("A01_62")
+b = open("A01_62_allchr.txt", "w")
+for line in open('biallelic.vcf'):
+    if line.startswith('#'):
+        continue
+    fields = line.rstrip('\n').split('\t')
+    chrom = fields[0]
+    pos = fields[1]
+    samples = fields[9:]
+    sample_data = samples[sample_index]
+    genotype = sample_data.split(":")[0]
+    if genotype == "0":
+        print(f"{chrom}\t{pos}\t0", file = b)
+    elif genotype == "1":
+        print (f"{chrom}\t{pos}\t1", file = b)
+    else:
+        continue
+    print()
+b.close()
