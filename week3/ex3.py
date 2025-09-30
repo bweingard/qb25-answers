@@ -39,9 +39,9 @@ for line in open('biallelic.vcf'):
                     sample_data = samples[i]
                     genotype = sample_data.split(":")[0]
                 if genotype == "0":
-                    print("0", file = a)
+                    print(f"{pos}\t0", file = a)
                 elif genotype == "1":
-                    print ("1", file = a)
+                    print (f"{pos}\t1", file = a)
                 else:
                     continue
                 print()
