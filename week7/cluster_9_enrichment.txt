@@ -1,0 +1,30 @@
+
+
+
+
+
+Analysis Type:	PANTHER Overrepresentation Test (Released 20240807)
+Annotation Version and Release Date:	GO Ontology database DOI:  10.5281/zenodo.16423886 Released 2025-07-22
+Analyzed List:	upload_1 (Drosophila melanogaster)
+Reference List:	Drosophila melanogaster (all genes in database)
+Test Type:	FISHER
+Correction:	FDR
+GO biological process complete	Drosophila melanogaster - REFLIST (13821)	upload_1 (99)	upload_1 (expected)	upload_1 (over/under)	upload_1 (fold Enrichment)	upload_1 (raw P-value)	upload_1 (FDR)
+negative regulation of oskar mRNA translation (GO:0007319)	9	3	.06	+	46.54	2.90E-05	1.75E-02
+regulation of oskar mRNA translation (GO:0046011)	16	4	.11	+	34.90	4.22E-06	3.82E-03
+chorion-containing eggshell formation (GO:0007304)	55	9	.39	+	22.84	1.66E-10	1.20E-06
+eggshell formation (GO:0030703)	58	9	.42	+	21.66	2.73E-10	9.90E-07
+import across plasma membrane (GO:0098739)	58	5	.42	+	12.04	5.78E-05	2.79E-02
+cellular anatomical entity morphogenesis (GO:0032989)	148	7	1.06	+	6.60	9.16E-05	4.15E-02
+cellular component assembly involved in morphogenesis (GO:0010927)	148	7	1.06	+	6.60	9.16E-05	3.91E-02
+external encapsulating structure organization (GO:0045229)	149	7	1.07	+	6.56	9.56E-05	3.85E-02
+follicle cell of egg chamber development (GO:0030707)	243	11	1.74	+	6.32	1.28E-06	3.09E-03
+epithelial cell development (GO:0002064)	271	11	1.94	+	5.67	3.68E-06	3.82E-03
+epithelial cell differentiation (GO:0030855)	327	12	2.34	+	5.12	3.68E-06	4.45E-03
+oogenesis (GO:0048477)	555	15	3.98	+	3.77	8.97E-06	6.50E-03
+female gamete generation (GO:0007292)	599	16	4.29	+	3.73	5.05E-06	4.07E-03
+germ cell development (GO:0007281)	696	18	4.99	+	3.61	1.89E-06	2.74E-03
+cellular process involved in reproduction in multicellular organism (GO:0022412)	756	19	5.42	+	3.51	1.43E-06	2.59E-03
+gamete generation (GO:0007276)	893	19	6.40	+	2.97	1.59E-05	1.05E-02
+developmental process involved in reproduction (GO:0003006)	935	19	6.70	+	2.84	3.02E-05	1.69E-02
+sexual reproduction (GO:0019953)	1060	20	7.59	+	2.63	5.19E-05	2.69E-02
